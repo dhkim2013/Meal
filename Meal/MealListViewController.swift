@@ -18,19 +18,55 @@ class MealListViewController: UIViewController, UITableViewDataSource, UITableVi
         action: #selector(schoolSelectButtonItemDidSelect)
     )
     let tableView = UITableView()
+    let toolbar = UIToolbar()
+    let prevMonthButtonItem = UIBarButtonItem(title: "이전달", style: .plain, target: nil, action: nil)
+    let nextMonthButtonItem = UIBarButtonItem(title: "다음달", style: .plain, target: nil, action: nil)
+    var date: (year: Int, month: Int)
     var meals: [Meal] = []
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        let today = Date()
+        let year = Calendar.current.component(.year, from: today)
+        let month = Calendar.current.component(.month, from: today)
+        self.date = (year: year, month: month)
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.schoolSelectButtonItem.target = self
+        self.prevMonthButtonItem.target = self
+        self.prevMonthButtonItem.action = #selector(prevMonthButtonItemDidSelect)
+        self.nextMonthButtonItem.target = self
+        self.nextMonthButtonItem.action = #selector(nextMonthButtonItemDidSelect)
         self.navigationItem.rightBarButtonItem = self.schoolSelectButtonItem
         self.tableView.register(MealCell.self, forCellReuseIdentifier: "mealCell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.tableView.frame = self.view.bounds
+        self.toolbar.items = [
+            self.prevMonthButtonItem,
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            self.nextMonthButtonItem,
+        ]
         self.view.addSubview(self.tableView)
+        self.view.addSubview(self.toolbar)
         self.loadMeals()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.tableView.frame = self.view.bounds
+        self.toolbar.frame = CGRect(
+            x: 0,
+            y: self.view.frame.size.height - 44,
+            width: self.view.frame.size.width,
+            height: 44
+        )
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -44,8 +80,12 @@ class MealListViewController: UIViewController, UITableViewDataSource, UITableVi
         let schoolCode = "B100000658"
         let path = "/school/\(schoolCode)/meals"
         let urlString = baseURLString + path
+        let parameters: [String: Any] = [
+            "year": self.date.year,
+            "month": self.date.month,
+        ]
         
-        Alamofire.request(urlString).responseJSON { response in
+        Alamofire.request(urlString, parameters: parameters).responseJSON { response in
             guard let json = response.result.value as? [String: [[String: Any]]],
                 let dicts = json["data"]
                 else { return }
@@ -64,6 +104,32 @@ class MealListViewController: UIViewController, UITableViewDataSource, UITableVi
         let navigationController = UINavigationController(rootViewController: schoolSearchViewController)
         
         self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    func prevMonthButtonItemDidSelect() {
+        var newYear = self.date.year
+        var newMonth = self.date.month - 1
+        
+        if newMonth <= 0 {
+            newMonth = 12
+            newYear -= 1
+        }
+        
+        self.date = (year: newYear, month: newMonth)
+        loadMeals()
+    }
+    
+    func nextMonthButtonItemDidSelect() {
+        var newYear = self.date.year
+        var newMonth = self.date.month + 1
+        
+        if newMonth >= 13 {
+            newMonth = 1
+            newYear += 1
+        }
+        
+        self.date = (year: newYear, month: newMonth)
+        loadMeals()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
