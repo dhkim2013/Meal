@@ -21,8 +21,10 @@ class MealListViewController: UIViewController, UITableViewDataSource, UITableVi
     let toolbar = UIToolbar()
     let prevMonthButtonItem = UIBarButtonItem(title: "이전달", style: .plain, target: nil, action: nil)
     let nextMonthButtonItem = UIBarButtonItem(title: "다음달", style: .plain, target: nil, action: nil)
+    
     var date: (year: Int, month: Int)
     var meals: [Meal] = []
+    var school: School?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         let today = Date()
@@ -47,6 +49,8 @@ class MealListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tableView.register(MealCell.self, forCellReuseIdentifier: "mealCell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.tableView.contentInset.bottom = 44
+        self.tableView.scrollIndicatorInsets.bottom = 44
         self.toolbar.items = [
             self.prevMonthButtonItem,
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
@@ -74,10 +78,10 @@ class MealListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func loadMeals() {
+        guard let schoolCode = self.school?.code else { return }
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         let baseURLString = "https://schoool.herokuapp.com"
-        let schoolCode = "B100000658"
         let path = "/school/\(schoolCode)/meals"
         let urlString = baseURLString + path
         let parameters: [String: Any] = [
@@ -101,6 +105,11 @@ class MealListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func schoolSelectButtonItemDidSelect() {
         let schoolSearchViewController = SchoolSearchViewController()
+        schoolSearchViewController.didSelectSchool = { school in
+            self.school = school
+            self.title = school.name
+            self.loadMeals()
+        }
         let navigationController = UINavigationController(rootViewController: schoolSearchViewController)
         
         self.present(navigationController, animated: true, completion: nil)

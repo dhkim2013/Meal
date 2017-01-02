@@ -18,6 +18,7 @@
 		8058F8391E112F380024F5F9 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058F8381E112F380024F5F9 /* Meal.swift */; };
 		8058F83B1E1147130024F5F9 /* MealCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058F83A1E1147130024F5F9 /* MealCell.swift */; };
 		8058F83D1E13ED0A0024F5F9 /* SchoolSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058F83C1E13ED0A0024F5F9 /* SchoolSearchViewController.swift */; };
+		8058F83F1E1A272F0024F5F9 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058F83E1E1A272F0024F5F9 /* School.swift */; };
 		E9340B9D98C740894CB8BE3A /* Pods_Meal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84173CFD2953E76F45CAAA3A /* Pods_Meal.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		8058F8381E112F380024F5F9 /* Meal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		8058F83A1E1147130024F5F9 /* MealCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealCell.swift; sourceTree = "<group>"; };
 		8058F83C1E13ED0A0024F5F9 /* SchoolSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolSearchViewController.swift; sourceTree = "<group>"; };
+		8058F83E1E1A272F0024F5F9 /* School.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		84173CFD2953E76F45CAAA3A /* Pods_Meal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF411EE4436F6AF70F733A6B /* Pods-MealUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MealUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MealUITests/Pods-MealUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C6C91638234785A22B8DAFBC /* Pods-MealTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MealTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MealTests/Pods-MealTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				8058F80A1E1125320024F5F9 /* AppDelegate.swift */,
 				8058F80C1E1125320024F5F9 /* MealListViewController.swift */,
 				8058F83C1E13ED0A0024F5F9 /* SchoolSearchViewController.swift */,
+				8058F83E1E1A272F0024F5F9 /* School.swift */,
 				8058F83A1E1147130024F5F9 /* MealCell.swift */,
 				8058F8381E112F380024F5F9 /* Meal.swift */,
 				8058F8111E1125320024F5F9 /* Assets.xcassets */,
@@ -452,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8058F83B1E1147130024F5F9 /* MealCell.swift in Sources */,
+				8058F83F1E1A272F0024F5F9 /* School.swift in Sources */,
 				8058F83D1E13ED0A0024F5F9 /* SchoolSearchViewController.swift in Sources */,
 				8058F80D1E1125320024F5F9 /* MealListViewController.swift in Sources */,
 				8058F8391E112F380024F5F9 /* Meal.swift in Sources */,
